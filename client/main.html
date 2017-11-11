@@ -3,5 +3,201 @@
 </head>
 
 <body>
-
+  <div id="root">
+    {{#if currentUser }}
+      {{> home}}
+    {{else}}
+      {{> welcome}}
+    {{/if}}
+  </div>
 </body>
+
+<template name="welcome">
+  <div class="columns">
+    <div class="column"></div>
+    <div class="column">
+      <section class="hero is-fullheight">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+              <form>
+                <h3 class="title has-text-grey">San Andreas</h3>
+                <img class="image" style="display:block;margin:0 auto;margin-bottom:8px" src="/img/emergency_911.png">
+                <h3 class="title has-text-grey">County Dispatch</h3>
+                {{#if error}}
+                  <div class="notification is-danger" id="err">
+                    {{errorval}}
+                  </div>
+                {{/if}}
+                <p class="subtitle has-text-grey">Please login to proceed.</p>
+                <div class="box">
+                  <div class="field">
+                    <div class="control">
+                      <input class="input is-large" type="text" id="username" placeholder="Your County ID" autofocus="">
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <div class="control">
+                      <input class="input is-large" type="password" id="password" placeholder="Your Password">
+                    </div>
+                  </div>
+                  <button type="submit" class="button is-block is-info is-large">Login</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="column"></div>
+  </div>
+</template>
+
+<template name="home">
+  <div class="columns">
+    <div class="column"></div>
+    <div class="column is-8">
+      <div class="tabs">
+        <ul>
+          <li id="golookup" class="{{#if lookupspace}}is-active{{/if}}"><a>Lookup</a></li>
+          <li id="goregister" class="{{#unless lookupspace}}is-active{{/unless}}"><a>Register</a></li>
+        </ul>
+      </div>
+      <div id="entityspace">
+        {{#if lookupspace}}
+          {{> lookup}}
+        {{else}}
+          {{> register}}
+        {{/if}}
+      </div>
+    </div>
+    <div class="column"></div>
+  </div>
+</template>
+
+<template name="lookup">
+  <div class="tile">
+    <div style="text-align:center" class="tile is-parent">
+      <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+        <p class="title">Peds</p>
+        <p class="subtitle">Lookup peds</p>
+        {{#if ready}}
+          {{> pedlookup}}
+        {{/if}}
+      </article>
+      <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+        <p class="title">Vehicles</p>
+        <p class="subtitle">Lookup vehicles</p>
+        {{#if ready}}
+          {{> vehlookup}}
+        {{/if}}
+      </article>
+    </div>
+  </div>
+  <div class="tile">
+    <div style="text-align:center" class="tile is-parent">
+      <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+        <p class="title">Results</p>
+        <p class="subtitle">SA County Database Results</p>
+        <div id="results" style="text-align:left">
+          {{> results}}
+        </div>
+      </article>
+    </div>
+  </div>
+</template>
+
+<template name="pedlookup">
+  <form>
+    <div class="field is-grouped">
+      <input class="input" placeholder="Ped Name (First)" type="text" id="pednamef">
+      <input class="input" placeholder="Ped Name (Last)" type="text" id="pednamel">
+    </div>
+    <div class="field">
+      <button type="submit" id="gopedlookup" class="button is-primary">GO</button>
+    </div>
+  </form>
+</template>
+
+<template name="vehlookup">
+  <form>
+    <div class="field">
+      <input class="input" placeholder="Vehicle Plate" type="text" id="vehname">
+    </div>
+    <div class="field">
+      <button type="submit" id="govehlookup" class="button is-primary">GO</button>
+    </div>
+  </form>
+</template>
+
+<template name="results">
+  {{#if noresults}}
+    <p class="subtitle" style="text-align:center">No Results Found. Verify input</p>
+  {{/if}}
+  {{#if isPed}}
+    {{#each results}}
+        {{> pedresult}}
+    {{/each}}
+  {{else}}
+    {{#each results}}
+      {{> vehresult}}
+    {{/each}}
+  {{/if}}
+</template>
+
+<template name="pedresult">
+  <div class="container">
+    <div class="notification">
+      <p class="title">Suspect Info: {{name.last}}, {{name.first}}</p>
+      <hr />
+      <p>First Name: {{name.first}}</p>
+      <p>Last Name: {{name.last}}</p>
+      <p>Suspect Date of Birth: {{dob}}</p>
+      {{#if isWanted}}
+        <p style="color:red;font-size:1.5rem;margin-top:1rem;margin-bottom:1rem">Wanted: Suspect is wanted in San Andreas</p>
+      {{else}}
+        <p>Wanted: Suspect is not wanted</p>
+      {{/if}}
+      <p class="subtitle" style="font-size:1.5rem">Known Suspect Priors:</p>
+      {{#if anyprior}}
+        <p>No priors found. Suspect record clear</p>
+      {{/if}}
+      {{#if priors.speeding}}
+        <p>Found priors for speeding</p>
+      {{/if}}
+      {{#if priors.assault}}
+        <p>Found priors for assault</p>
+      {{/if}}
+      {{#if priors.drug}}
+        <p>Found priors for illegal substance posession/transacting</p>
+      {{/if}}
+      {{#if priors.dui}}
+        <p>Found priors for driving under the influence</p>
+      {{/if}}
+      {{#if priors.theft}}
+        <p>Found priors for theft</p>
+      {{/if}}
+      {{#if priors.arson}}
+        <p>Found priors for arson</p>
+      {{/if}}
+      {{#if priors.fraud}}
+        <p>Found priors for fradulent activities</p>
+      {{/if}}
+      {{#if isWanted}}
+        <p style="color:red;font-size:1.5rem;margin-top:1rem;margin-bottom:1rem">Proceed with extreme caution</p>
+      {{/if}}
+    </div>
+  </div>
+</template>
+
+<template name="vehresult">
+  <section class="section">
+    <div class="container">
+      <h1 class="title">{{vin}}</h1>
+      <h2 class="subtitle">
+        A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
+      </h2>
+    </div>
+  </section>
+</template>

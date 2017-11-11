@@ -1,0 +1,108 @@
+<template name="register">
+	<div class="tile">
+    <div style="text-align:center" class="tile is-parent">
+      <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+        <p class="title">Peds</p>
+        <p class="subtitle">Register a new ped</p>
+        <div style="text-align:left">
+        	{{> pedreg}}
+      	</div>
+      </article>
+      <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+        <p class="title">Vehicles</p>
+        <p class="subtitle">Register a new vehicle</p>
+        <div style="text-align:left">
+        	{{> vehreg}}
+      	</div>
+      </article>
+    </div>
+  </div>
+</template>
+
+<template name="pedreg">
+	<form>
+		<div class="field">
+		  <label class="label">Enter ped first name</label>
+		  <div class="control">
+		    <input class="input" id="namef" type="text" placeholder="First name">
+		  </div>
+		</div>
+		<div class="field">
+		  <label class="label">Enter ped last name</label>
+		  <div class="control">
+		    <input class="input" id="namel" type="text" placeholder="Last name">
+		  </div>
+		</div>
+		<div class="field">
+		  <div class="control">
+		    <label class="checkbox">
+		      <input type="date" id="dob">
+		      Ped Date of Birth
+		    </label>
+		  </div>
+		</div>
+		<div class="field">
+		  <div class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="wanted">
+		      Ped Wanted
+		    </label>
+		  </div>
+		</div>
+		<p class="subtitle">Ped Priors</p>
+		<div class="field is-grouped">
+		  <p class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="pspeeding">
+		      Speeding
+		    </label>
+		  </p>
+		  <p class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="passault">
+		      Assault
+		    </label>	
+		  </p>
+		  <p class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="pdrug">
+		      Illegal Drug Use
+		    </label>	
+		  </p>
+		  <p class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="pdui">
+		      DUI
+		    </label>	
+		  </p>
+		  <p class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="ptheft">
+		      Theft
+		    </label>	
+		  </p>
+		  <p class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="parson">
+		      Arson
+		    </label>	
+		  </p>
+		  <p class="control">
+		    <label class="checkbox">
+		      <input type="checkbox" id="pfraud">
+		      Fraud
+		    </label>	
+		  </p> 
+		</div>
+		<div class="field is-grouped">
+		  <div class="control is-expanded">
+		    <button class="button is-link is-fullwidth">Register Ped</button>
+		  </div>
+		</div>
+	</form>
+</template>	
+
+<template name="vehreg">
+	<form>
+	</form>
+</template>
