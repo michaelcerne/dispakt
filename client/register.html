@@ -1,4 +1,10 @@
 <template name="register">
+	<div class="tabs">
+		<ul>
+			<li id="goinsert" class="{{#if regspace}}is-active{{/if}}"><a>Add Ped/Vehicle</a></li>
+			<li id="goupdate" class="{{#unless regspace}}is-active{{/unless}}"><a>Modify Ped/Vehicle</a></li>
+		</ul>
+	</div>
 	<div class="tile">
     <div style="text-align:center" class="tile is-parent">
       <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
@@ -49,6 +55,32 @@
 		    </label>
 		  </div>
 		</div>
+		<div class="field is-grouped">
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" id="lstate">
+					Has Motorvehicle License
+				</label>
+			</p>
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" id="lrevoked">
+					MV License Revoked
+				</label>
+			</p>
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" id="lair">
+					Has Aircraft License
+				</label>
+			</p>
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" id="lrevokedair">
+					AC License Revoked
+				</label>
+			</p>
+		</div>
 		<p class="subtitle">Ped Priors</p>
 		<div class="field is-grouped">
 		  <p class="control">
@@ -92,7 +124,25 @@
 		      <input type="checkbox" id="pfraud">
 		      Fraud
 		    </label>	
-		  </p> 
+			</p> 
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" id="pswitch">
+					Custom Prior
+				</label>	
+			</p> 
+		</div>
+		<div class="field" id="pextraf" style="display:none">
+			<label class="label">Additional prior</label>
+			<div class="control">
+				<input class="input" type="text" placeholder="Extra prior" id="pextra">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Additional ped notes</label>
+			<div class="control">
+				<textarea class="textarea" id="pnotes" placeholder="Notes"></textarea>
+			</div>
 		</div>
 		<div class="field is-grouped">
 		  <div class="control is-expanded">
@@ -104,5 +154,60 @@
 
 <template name="vehreg">
 	<form>
+			<div class="field">
+				<label class="label">Enter vehicle license plate</label>
+				<div class="control">
+					<input class="input" id="vplate" type="input" placeholder="License plate">
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Vehicle model</label>
+				<div class="control">
+					<input class="input" id="vmodel" type="input" placeholder="Vehicle model">
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Vehicle year</label>
+				<div class="control">
+					<input class="input" id="vyear" type="number" placeholder="Vehicle year">
+				</div>
+			</div>		
+			<div class="field is-grouped">
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" id="vstolen">
+						Marked stolen
+					</label>
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" id="vexpired">
+						Insurance expired
+					</label>
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" id="vrevoked">
+						Insurance revoked
+					</label>
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" id="vtow">
+						Marked for tow
+					</label>
+				</p>
+			</div>
+			<div class="field">
+				<label class="label">Additional ped notes</label>
+				<div class="control">
+					<textarea class="textarea" id="vnotes" placeholder="Notes"></textarea>
+				</div>
+			</div>
+			<div class="field is-grouped">
+				<div class="control is-expanded">
+					<button class="button is-link is-fullwidth">Register Ped</button>
+				</div>
+			</div>
 	</form>
 </template>

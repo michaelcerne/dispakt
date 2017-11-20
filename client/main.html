@@ -1,8 +1,40 @@
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>dispakt</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['VT323']
+      }
+    });
+  </script>
 </head>
 
 <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item">
+          <img src="/img/sheriff.png">
+        </a>
+        <a class="navbar-item is-hidden-touch">
+          <p>SAPD Criminal Records Database</p>
+        </a>
+        <a class="navbar-item is-hidden-desktop">
+          <p>SAPD</p>
+        </a>
+        {{#if currentUser}}
+          <a class="navbar-item is-hidden-desktop">{{tod}}, Officer {{currentUser.username}}</a>
+        {{/if}}
+      </div>
+      <div class="navbar-end is-hidden-touch">
+        {{#if currentUser}}
+          <a class="navbar-item">{{tod}}, Officer {{currentUser.username}}</a>
+        {{/if}}
+      </div>
+    </nav>
   <div id="root">
     {{#if currentUser }}
       {{> home}}
@@ -30,19 +62,21 @@
                   </div>
                 {{/if}}
                 <p class="subtitle has-text-grey">Please login to proceed.</p>
-                <div class="box">
+                <div class="box is-expanded">
                   <div class="field">
                     <div class="control">
                       <input class="input is-large" type="text" id="username" placeholder="Your County ID" autofocus="">
                     </div>
                   </div>
-
+                  {{#if loggingIn}}
+                    <img src="/load.svg">
+                  {{/if}}
                   <div class="field">
                     <div class="control">
                       <input class="input is-large" type="password" id="password" placeholder="Your Password">
                     </div>
                   </div>
-                  <button type="submit" class="button is-block is-info is-large">Login</button>
+                  <button type="submit" class="button is-block is-info is-large is-fullwidth">Access</button>
                 </div>
               </form>
             </div>
@@ -95,7 +129,7 @@
       </article>
     </div>
   </div>
-  <div class="tile">
+  <div class="tile is-ancestor">
     <div style="text-align:center" class="tile is-parent">
       <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
         <p class="title">Results</p>
@@ -147,10 +181,11 @@
 </template>
 
 <template name="pedresult">
-  <div class="container">
+  <div style="font-size:2rem">
     <div class="notification">
       <p class="title">Suspect Info: {{name.last}}, {{name.first}}</p>
       <hr />
+      <a class="modped">Modify Entry</a>
       <p>First Name: {{name.first}}</p>
       <p>Last Name: {{name.last}}</p>
       <p>Suspect Date of Birth: {{dob}}</p>
@@ -159,7 +194,20 @@
       {{else}}
         <p>Wanted: Suspect is not wanted</p>
       {{/if}}
-      <p class="subtitle" style="font-size:1.5rem">Known Suspect Priors:</p>
+      <p style="font-size:1.5rem;padding-top:1rem">Suspect License Status:</p>
+      {{#if license.mv.owned}}
+        <p>Motorvehicle License: Owned</p>
+        <p>Status: {{#if license.mv.revoked}}Invalid (License revoked){{else}}Valid{{/if}}</p>
+      {{else}}
+        <p>Motorvehicle License: Not Owned</p>
+      {{/if}}
+      {{#if license.ac.owned}}
+        <p>Aircraft License: Owned</p>
+        <p>Status: {{#if license.ac.revoked}}Invalid (License revoked){{else}}Valid{{/if}}</p>
+      {{else}}
+        <p>Aircraft License: Not Owned</p>
+      {{/if}}
+      <p style="font-size:1.5rem;padding-top:1rem">Known Suspect Priors:</p>
       {{#if anyprior}}
         <p>No priors found. Suspect record clear</p>
       {{/if}}
@@ -184,6 +232,10 @@
       {{#if priors.fraud}}
         <p>Found priors for fradulent activities</p>
       {{/if}}
+      {{#if priors.extra.use}}
+        <p>"{{priors.extra.value}}" found</p>
+      {{/if}}
+      <p>Additional notes: "{{notes}}"</p>
       {{#if isWanted}}
         <p style="color:red;font-size:1.5rem;margin-top:1rem;margin-bottom:1rem">Proceed with extreme caution</p>
       {{/if}}
@@ -192,12 +244,36 @@
 </template>
 
 <template name="vehresult">
-  <section class="section">
-    <div class="container">
-      <h1 class="title">{{vin}}</h1>
-      <h2 class="subtitle">
-        A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
-      </h2>
+  <div style="font-size:2rem">
+    <div class="notification">
+      <p class="title">Vehicle Info: {{plate}}</p>
+      <hr />
+      <a class="modveh">Modify Entry</a>
+      <p>Vehicle Year: {{year}}</p>
+      <p>Vehicle Model: <span style="text-transform:uppercase">{{model}}</span></p>
+      <p>Suspect Date of Birth: {{dob}}</p>
+      {{#if stolen}}
+        <p>Suspect vehicle stolen</p>
+      {{else}}
+        <p>Suspect vehicle not stolen</p>
+      {{/if}}
+      {{#if expired}}
+        <p>Suspect vehicle registration expired</p>
+      {{else}}
+        <p>Suspect vehicle registration not expired</p>
+      {{/if}}
+      {{#if revoked}}
+        <p>Suspect vehicle registration invalidated</p>
+      {{else}}
+        <p>Suspect vehicle registration valid</p>
+      {{/if}}
+      {{#if tow}}
+        <p>Vehicle awaiting tow service</p>
+      {{/if}}
+      <p>Additional notes: "{{notes}}"</p>
+      {{#if stolen}}
+        <p style="color:red;font-size:1.5rem;margin-top:1rem;margin-bottom:1rem">Proceed with extreme caution</p>
+      {{/if}}
     </div>
-  </section>
+  </div>
 </template>

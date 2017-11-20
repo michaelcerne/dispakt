@@ -3,9 +3,11 @@ import { Meteor } from 'meteor/meteor';
 Meteor.publish("Peds", function () {
     return Peds.find();
 });
+
 Meteor.publish("Vehicles", function () {
     return Vehicles.find();
 });
+
 Meteor.publish("userData", function() {
  return Meteor.users.find({}, {
   fields: {
@@ -26,6 +28,6 @@ Meteor.methods({
 		Peds.insert(dat)
 	},
 	'vehAdd': function(dat){
-		Vehicles.insert({"vin":dat.vin})
+		Vehicles.insert(dat)
 	},
 })

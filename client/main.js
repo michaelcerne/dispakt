@@ -13,6 +13,18 @@ function targetview() {
   }
 }
 
+function getGreetingTime() {
+	let d = new Date;
+	let h = d.getHours();
+	if(h < 12) {
+		return 'Morning'
+	} else if(h >= 12 && h <= 17) {
+		return 'Afternoon'
+	} else if(h >= 17 && h <= 24) {
+		return 'Evening'
+	}
+}
+
 Template.body.onCreated(function bodyOnCreated() {
   Meteor.subscribe('Peds');
   Meteor.subscribe('Vehicles');
@@ -22,11 +34,20 @@ Template.body.onCreated(function bodyOnCreated() {
 Template.body.onRendered(function() {
 	if(Session.get('space') === undefined) {
   	Session.set('space', "lookup")
-  };
+	};
+	if(Session.get('regspace') === undefined) {
+		Session.set('regspace', "insert")
+	};
   if(Session.get('search') === undefined) {
   	Session.set('search', "")
   }
 });
+
+Template.body.helpers({
+	'tod': function() {
+		return getGreetingTime()
+	}
+})
 
 Template.welcome.onCreated(function() {
   this.errorstate = new ReactiveVar('');
@@ -85,7 +106,7 @@ Template.vehlookup.events({
 	'submit form': function(event) {
 		event.preventDefault();
 		let lic = document.getElementById('vehname').value;
-		Session.set('search', {vin:lic,type:"veh"});
+		Session.set('search', {plate:lic,type:"veh"});
 	}
 });
 
@@ -95,9 +116,9 @@ Template.results.helpers({
 		if(Session.get('search').type === "ped") {
 			return Peds.find({name:{first:crit.name.first,last:crit.name.last}})
 		} else {
-			return Vehicles.find({vin:crit.vin})
+			return Vehicles.find({plate:crit.plate})
 		}
-  },
+	},
   'noresults': function() {
   	let crit = Session.get('search');
   	if(Session.get('search').type === "ped") {
@@ -158,11 +179,21 @@ Template.pedresult.helpers({
 		        result = false;
 		        break;
 		    }
-		}
+		};
+		if(obj.priors.extra.use === true) {
+			result = false
+		};
 		if(result) {
 			return true
 		} else {
 			return false
 		}
+	}
+});
+
+Template.pedresult.events({
+	'click a': function(event) {
+		console.log("Clicked");
+		console.log(this._id)
 	}
 })

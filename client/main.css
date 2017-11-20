@@ -1,1 +1,30 @@
-/* CSS declarations go here */
+html, body {
+  height: 100%;
+  font-family: 'VT323', monospace;
+  background: rgb(0, 81, 255);
+  background-size: cover;
+}
+
+div.column.is-8 {
+  background: #FFFFFF
+}
+
+div.column.is-4 {
+  background: #FFFFFF;
+  border: 2px solid #ffffff;
+  border-radius: 4px
+}
+
+::-webkit-scrollbar {
+  display: none
+}
+
+@media only screen and (max-width: 1800px) {
+  .field.is-grouped {
+    flex-direction: column;
+  }
+}
+
+a.modveh, a.modped {
+  float: right;
+}
