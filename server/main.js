@@ -28,7 +28,7 @@ Meteor.methods({
 		Peds.insert(dat)
 	},
 	'pedUpdate': function(dat, id){
-		Peds.update({_id:id}, { $set: dat });
+		Peds.update({_id:id}, { $set: dat })
 	},
 	'pedRemove': function(id){
 		Peds.remove({_id:id})
@@ -36,4 +36,10 @@ Meteor.methods({
 	'vehAdd': function(dat){
 		Vehicles.insert(dat)
 	},
+	'vehUpdate': function(dat, id){
+		Vehicles.update({_id:id}, { $set: dat})
+	},
+	'vehRemove': function(id){
+		Vehicles.remove({_id:id})
+	}
 })

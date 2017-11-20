@@ -127,3 +127,29 @@ Template.pedupdate.events({
 		Meteor.call('pedRemove', Session.get('editing').id)
 	}
 });
+
+Template.vehupdate.helpers({
+	'upe': function() {
+		return Vehicles.find({_id:Session.get('editing').id}).fetch()[0]
+	}
+});
+
+Template.vehupdate.events({
+	'submit form': function(event) {
+		event.preventDefault();
+		let id = Session.get('editing').id;
+		let vmodel = document.getElementById('vmodel').value;
+		let vyear = document.getElementById('vyear').value;
+		let vstolen = document.getElementById('vstolen').checked;
+		let vexpired = document.getElementById('vexpired').checked;
+		let vrevoked = document.getElementById('vrevoked').checked;
+		let vtow = document.getElementById('vtow').checked;
+		let vnotes = document.getElementById('vnotes').value;
+		let dat = {"model":vmodel,"year":vyear,"stolen":vstolen,"expired":vexpired,"revoked":vrevoked,"tow":vtow,"notes":vnotes};
+		console.log(dat);
+		Meteor.call('vehAdd', dat)
+	},
+	'click .delete': function(event) {
+		Meteor.call('vehRemove', Session.get('editing').id)
+	}
+});

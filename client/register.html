@@ -361,5 +361,62 @@
 </template>
 
 <template name="vehupdate">
-	<p>OHOHO</p>>
+	<form>
+			<a style="float:right" class="delete is-large"></a>
+		<div class="field">
+			<label class="label">Enter vehicle license plate</label>
+			<div class="control">
+				<input class="input" id="vplate" type="input" value="{{upe.plate}}" disabled placeholder="License plate">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Vehicle model</label>
+			<div class="control">
+				<input class="input" id="vmodel" type="input" value="{{upe.model}}" placeholder="Vehicle model">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Vehicle year</label>
+			<div class="control">
+				<input class="input" id="vyear" type="number" value="{{upe.year}}" placeholder="Vehicle year">
+			</div>
+		</div>		
+		<div class="field is-grouped">
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" checked="{{upe.stolen}}" id="vstolen">
+					Marked stolen
+				</label>
+			</p>
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" checked="{{upe.expired}}" id="vexpired">
+					Insurance expired
+				</label>
+			</p>
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" checked="{{upe.revoked}}" id="vrevoked">
+					Insurance revoked
+				</label>
+			</p>
+			<p class="control">
+				<label class="checkbox">
+					<input type="checkbox" value="{{upe.tow}}" id="vtow">
+					Marked for tow
+				</label>
+			</p>
+		</div>
+		<div class="field">
+			<label class="label">Additional ped notes</label>
+			<div class="control">
+				<textarea class="textarea" id="vnotes" value="{{upe.notes}}" placeholder="Notes"></textarea>
+			</div>
+		</div>
+		<div class="field is-grouped">
+			<div class="control is-expanded">
+				<button class="button is-link is-fullwidth">Register Ped</button>
+			</div>
+		</div>
+	</form>
 </template>
