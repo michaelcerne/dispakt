@@ -7,6 +7,16 @@ Template.register.helpers({
 		} else {
 			return false
 		}
+	},
+	'type': function() {
+		return Session.get('editing').type
+	},
+	'typePed': function() {
+		if(Session.get('editing').type == "ped") {
+			return true
+		} else {
+			return false
+		}
 	}
 });
 
@@ -71,4 +81,49 @@ Template.vehreg.events({
 		console.log(dat);
 		Meteor.call('vehAdd', dat)
 	}
-})
+});
+
+Template.pedupdate.helpers({
+	'upe': function() {
+		return Peds.find({_id:Session.get('editing').id}).fetch()[0]
+	}
+});
+
+Template.pedupdate.events({
+	'submit form': function(event) {
+		event.preventDefault();
+		let id = Session.get('editing').id;
+		let dob = document.getElementById('dob').value;
+		let wanted = document.getElementById('wanted').checked;
+		let lstate = document.getElementById('lstate').checked;
+		let lair = document.getElementById('lair').checked;
+		let lrevoked = document.getElementById('lrevoked').checked;
+		let lrevokedair = document.getElementById('lrevokedair').checked;
+		let pspeeding = document.getElementById('pspeeding').checked;
+		let passault = document.getElementById('passault').checked;
+		let pdrug = document.getElementById('pdrug').checked;
+		let pdui = document.getElementById('pdui').checked;
+		let ptheft = document.getElementById('ptheft').checked;
+		let parson = document.getElementById('parson').checked;
+		let pfraud = document.getElementById('pfraud').checked;
+		let pextra = document.getElementById('pextra').value;
+		let pnotes = document.getElementById('pnotes').value;
+		let extrafield = false;
+		if(pswitch.checked === true) {
+			extrafield = true
+		};
+		let dat = {"dob":dob,"isWanted":wanted,"notes":pnotes,"license":{"mv":{"owned":lstate,"revoked":lrevoked},"ac":{"owned":lair,"revoked":lrevokedair}},"priors":{"speeding":pspeeding,"assault":passault,"drug":pdrug,"dui":pdui,"theft":ptheft,"arson":parson,"fraud":pfraud,"extra":{"use":extrafield,"value":pextra}}};
+		console.log(dat);
+		Meteor.call('pedUpdate', dat, id)
+	},
+	'click #pswitch': function(event) {
+		if (document.getElementById('pswitch').checked === true) {
+			document.getElementById('pextraf').style.display = "initial"
+		} else {
+			document.getElementById('pextraf').style.display = "none"
+		}
+	},
+	'click .delete': function(event) {
+		Meteor.call('pedRemove', Session.get('editing').id)
+	}
+});

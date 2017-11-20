@@ -27,6 +27,12 @@ Meteor.methods({
 	'pedAdd': function(dat){
 		Peds.insert(dat)
 	},
+	'pedUpdate': function(dat, id){
+		Peds.update({_id:id}, { $set: dat });
+	},
+	'pedRemove': function(id){
+		Peds.remove({_id:id})
+	},
 	'vehAdd': function(dat){
 		Vehicles.insert(dat)
 	},

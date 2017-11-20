@@ -40,7 +40,10 @@ Template.body.onRendered(function() {
 	};
   if(Session.get('search') === undefined) {
   	Session.set('search', "")
-  }
+	};
+	if(Session.get('editing') === undefined) {
+		Session.set('editing', "")
+	}
 });
 
 Template.body.helpers({
@@ -194,6 +197,16 @@ Template.pedresult.helpers({
 Template.pedresult.events({
 	'click a': function(event) {
 		console.log("Clicked");
-		console.log(this._id)
+		console.log(this._id);
+		Session.set('space', "register");
+		Session.set('regspace', "update");
+		Session.set('editing', {type:"ped",id:this._id})
+	}
+})
+
+Template.vehresult.events({
+	'click a': function(event) {
+		console.log("Clicked");
+		console.log(this._id);
 	}
 })

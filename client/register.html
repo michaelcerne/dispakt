@@ -5,24 +5,44 @@
 			<li id="goupdate" class="{{#unless regspace}}is-active{{/unless}}"><a>Modify Ped/Vehicle</a></li>
 		</ul>
 	</div>
-	<div class="tile">
-    <div style="text-align:center" class="tile is-parent">
-      <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
-        <p class="title">Peds</p>
-        <p class="subtitle">Register a new ped</p>
-        <div style="text-align:left">
-        	{{> pedreg}}
-      	</div>
-      </article>
-      <article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
-        <p class="title">Vehicles</p>
-        <p class="subtitle">Register a new vehicle</p>
-        <div style="text-align:left">
-        	{{> vehreg}}
-      	</div>
-      </article>
-    </div>
-  </div>
+	<div id="entityspace">
+		{{#if regspace}}
+			<div class="tile">
+				<div style="text-align:center" class="tile is-parent">
+					<article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+						<p class="title">Peds</p>
+						<p class="subtitle">Register a new ped</p>
+						<div style="text-align:left">
+							{{> pedreg}}
+						</div>
+					</article>
+					<article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+						<p class="title">Vehicles</p>
+						<p class="subtitle">Register a new vehicle</p>
+						<div style="text-align:left">
+							{{> vehreg}}
+						</div>
+					</article>
+				</div>
+			</div>
+		{{else}}
+			<div class="tile">
+				<div style="text-align:center" class="tile is-parent">
+					<article style="padding-top:2rem;padding-bottom:2rem" class="tile is-child notification">
+						<p class="title" style="text-transform:capitalize">{{type}} Update</p>
+						<p class="subtitle">Update an entry</p>
+						<div style="text-align:left">
+							{{#if typePed}}
+								{{> pedupdate}}
+							{{else}}
+								{{> vehupdate}}
+							{{/if}}
+						</div>
+					</article>
+				</div>
+			</div>
+		{{/if}}
+	</div>
 </template>
 
 <template name="pedreg">
@@ -210,4 +230,136 @@
 				</div>
 			</div>
 	</form>
+</template>
+
+<template name="pedupdate">
+		<form>
+			<a style="float:right" class="delete is-large"></a>
+			<div class="field">
+				<label class="label">Enter ped first name</label>
+				<div class="control">
+					<input class="input" id="namef" type="text" value="{{upe.name.first}}" disabled placeholder="First name">
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Enter ped last name</label>
+				<div class="control">
+					<input class="input" id="namel" type="text" value="{{upe.name.last}}" disabled placeholder="Last name">
+				</div>
+			</div>
+			<div class="field">
+				<div class="control">
+					<label class="checkbox">
+						<input type="date" value="{{upe.dob}}" id="dob">
+						Ped Date of Birth
+					</label>
+				</div>
+			</div>
+			<div class="field">
+				<div class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.isWanted}}" id="wanted">
+						Ped Wanted
+					</label>
+				</div>
+			</div>
+			<div class="field is-grouped">
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.license.mv.owned}}" id="lstate">
+						Has Motorvehicle License
+					</label>
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.license.mv.revoked}}" id="lrevoked">
+						MV License Revoked
+					</label>
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.license.ac.owned}}" id="lair">
+						Has Aircraft License
+					</label>
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.license.ac.revoked}}" id="lrevokedair">
+						AC License Revoked
+					</label>
+				</p>
+			</div>
+			<p class="subtitle">Ped Priors</p>
+			<div class="field is-grouped">
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.speeding}}" id="pspeeding">
+						Speeding
+					</label>
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.assault}}" id="passault">
+						Assault
+					</label>	
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.drug}}" id="pdrug">
+						Illegal Drug Use
+					</label>	
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.dui}}" id="pdui">
+						DUI
+					</label>	
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.theft}}" id="ptheft">
+						Theft
+					</label>	
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.arson}}" id="parson">
+						Arson
+					</label>	
+				</p>
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.fraud}}" id="pfraud">
+						Fraud
+					</label>	
+				</p> 
+				<p class="control">
+					<label class="checkbox">
+						<input type="checkbox" checked="{{upe.priors.extra.use}}" id="pswitch">
+						Custom Prior
+					</label>	
+				</p> 
+			</div>
+			<div class="field" id="pextraf" style="display:none">
+				<label class="label">Additional prior</label>
+				<div class="control">
+					<input class="input" type="text" placeholder="Extra prior" value="{{upe.priors.extras.text}}" id="pextra">
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Additional ped notes</label>
+				<div class="control">
+					<textarea class="textarea" id="pnotes" placeholder="Notes" value="{{upe.notes}}"></textarea>
+				</div>
+			</div>
+			<div class="field is-grouped">
+				<div class="control is-expanded">
+					<button class="button is-link is-fullwidth">Register Ped</button>
+				</div>
+			</div>
+		</form>
+</template>
+
+<template name="vehupdate">
+	<p>OHOHO</p>>
 </template>
