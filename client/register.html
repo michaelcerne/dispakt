@@ -226,7 +226,7 @@
 			</div>
 			<div class="field is-grouped">
 				<div class="control is-expanded">
-					<button class="button is-link is-fullwidth">Register Ped</button>
+					<button class="button is-link is-fullwidth">Register Vehicle</button>
 				</div>
 			</div>
 	</form>
@@ -234,7 +234,18 @@
 
 <template name="pedupdate">
 		<form>
-			<a style="float:right" class="delete is-large"></a>
+			<div class="block is-hidden-desktop">
+				<span class="tag is-danger">
+					Delete Ped
+					<button class="delete is-small"></button>
+				</span>
+			</div>
+			<div style="float:right" class="block is-hidden-touch">
+				<span class="tag is-danger">
+					Delete Ped
+					<button class="delete is-small"></button>
+				</span>
+			</div>
 			<div class="field">
 				<label class="label">Enter ped first name</label>
 				<div class="control">
@@ -354,7 +365,7 @@
 			</div>
 			<div class="field is-grouped">
 				<div class="control is-expanded">
-					<button class="button is-link is-fullwidth">Register Ped</button>
+					<button class="button is-link is-fullwidth">Update Ped</button>
 				</div>
 			</div>
 		</form>
@@ -362,7 +373,12 @@
 
 <template name="vehupdate">
 	<form>
-			<a style="float:right" class="delete is-large"></a>
+		<div style="float:right" class="block is-hidden-touch">
+			<span class="tag is-danger">
+				Delete Veh
+				<button class="delete is-small"></button>
+			</span>
+		</div>
 		<div class="field">
 			<label class="label">Enter vehicle license plate</label>
 			<div class="control">
@@ -415,7 +431,7 @@
 		</div>
 		<div class="field is-grouped">
 			<div class="control is-expanded">
-				<button class="button is-link is-fullwidth">Register Ped</button>
+				<button class="button is-link is-fullwidth">Update Vehicle</button>
 			</div>
 		</div>
 	</form>
