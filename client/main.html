@@ -183,22 +183,22 @@
 <template name="pedresult">
   <div>
     <div class="notification">
-      <p class="title">Suspect Info: {{name.last}}, {{name.first}}</p>
+      <p class="title is-size-5-touch">Suspect<span class="is-hidden-touch"> Info</span>: {{name.last}}, {{name.first}}</p>
       <hr />
-      <a class="modped">Modify Entry</a>
+      <a class="modped is-hidden-touch">Modify Entry</a>
       <div style="margin-bottom:1rem">
         <p>First Name: {{name.first}}</p>
         <p>Last Name: {{name.last}}</p>
         <p>Suspect Date of Birth: {{dob}}</p>
         {{#if isWanted}}
-          <p style="color:red;font-size:1.5rem">Wanted: Suspect wanted out of San Andreas</p>
+          <p class="is-size-4 is-size-6" style="color:red;margin-top:1rem">Wanted: Suspect wanted<span class="is-hidden-touch"> out of</span><span class="is-hidden-desktop"><br /> Call by:</span> San Andreas</p>
         {{else}}
           <p>Wanted: Suspect is not wanted</p>
         {{/if}}
       </div>
       <div style="margin-bottom:1rem">
-        <p class="is-hidden-desktop" style="font-size:1.5rem">Licensing:</p>
-        <p class="is-hidden-touch" style="font-size:1.5rem">Suspect License Status:</p>
+        <p class="is-hidden-desktop is-size-4">Licensing:</p>
+        <p class="is-hidden-touch is-size-4">Suspect License Status:</p>
         {{#if license.mv.owned}}
           <p>Motorvehicle License: Owned</p>
           <p>Status: {{#if license.mv.revoked}}Invalid (License revoked){{else}}Valid{{/if}}</p>
@@ -213,8 +213,8 @@
         {{/if}}
       </div>
       <div class="priority">
-        <p class="is-hidden-desktop" style="font-size:1.5rem">Priors:</p>
-        <p class="is-hidden-touch" style="font-size:1.5rem">Recorded Priors:</p>
+        <p class="is-hidden-desktop is-size-4">Priors:</p>
+        <p class="is-hidden-touch is-size-4">Recorded Priors:</p>
         <ol>
         {{#if anyprior}}
           <li>No priors found. Suspect record clear</li>
@@ -247,43 +247,53 @@
         <p>Additional notes: "{{notes}}"</p>
       </div>
       {{#if isWanted}}
-        <p style="color:red;font-size:1.5rem">Proceed with extreme caution</p>
+        <p class="is-size-4 is-size-5-touch" style="color:red;margin-top:1rem;margin-bottom:1rem">Proceed with caution</p>
       {{/if}}
+      <a class="is-hidden-desktop">Modify Entry</a>
     </div>
   </div>
 </template>
 
 <template name="vehresult">
-  <div style="font-size:2rem">
+  <div>
     <div class="notification">
-      <p class="title">Vehicle Info: {{plate}}</p>
+      <p class="title is-size-5-touch">Vehicle Info: {{plate}}</p>
       <hr />
-      <a class="modveh">Modify Entry</a>
-      <p>Vehicle Year: {{year}}</p>
-      <p>Vehicle Model: <span style="text-transform:uppercase">{{model}}</span></p>
-      <p>Suspect Date of Birth: {{dob}}</p>
+      <div style="margin-top:1rem;margin-bottom:1rem">
+        <a class="modveh is-hidden-touch">Modify Entry</a>
+        <p>Vehicle Plate: {{plate}}</p>
+        <p>Vehicle Year: {{year}}</p>
+        <p>Vehicle Model: <span style="text-transform:uppercase">{{model}}</span></p>
+      </div>
+      <div style="margin-bottom:1rem">
+        <p class="is-size-4">Stolen:</p>
+        {{#if stolen}}
+          <p style="margin-bottom:1rem">Vehicle stolen</p>
+        {{else}}
+          <p style="margin-bottom:1rem">Vehicle not stolen</p>
+        {{/if}}
+        <p class="is-size-4">Expiry:</p>
+        {{#if expired}}
+          <p style="margin-bottom:1rem">Vehicle registration expired</p>
+        {{else}}
+          <p style="margin-bottom:1rem">Vehicle registration not expired</p>
+        {{/if}}
+        <p class="is-size-4">Reg:</p>
+        {{#if revoked}}
+          <p style="margin-bottom:1rem">Vehicle registration invalid</p>
+        {{else}}
+          <p style="margin-bottom:1rem">Vehicle registration valid</p>
+        {{/if}}
+        {{#if tow}}
+        <p class="is-size-4">Tow:</p>
+          <p>Vehicle awaiting tow service</p>
+        {{/if}}
+      </div>
+      <p style="margin-bottom:1rem">Additional notes: "{{notes}}"</p>
       {{#if stolen}}
-        <p>Suspect vehicle stolen</p>
-      {{else}}
-        <p>Suspect vehicle not stolen</p>
+        <p class="is-size-4 is-size-5-touch" style="color:red;margin-top:1rem;margin-bottom:1rem">Proceed with caution</p>
       {{/if}}
-      {{#if expired}}
-        <p>Suspect vehicle registration expired</p>
-      {{else}}
-        <p>Suspect vehicle registration not expired</p>
-      {{/if}}
-      {{#if revoked}}
-        <p>Suspect vehicle registration invalidated</p>
-      {{else}}
-        <p>Suspect vehicle registration valid</p>
-      {{/if}}
-      {{#if tow}}
-        <p>Vehicle awaiting tow service</p>
-      {{/if}}
-      <p>Additional notes: "{{notes}}"</p>
-      {{#if stolen}}
-        <p style="color:red;font-size:1.5rem;margin-top:1rem;margin-bottom:1rem">Proceed with extreme caution</p>
-      {{/if}}
+      <a class="modveh is-hidden-desktop">Modify Entry</a>
     </div>
   </div>
 </template>
