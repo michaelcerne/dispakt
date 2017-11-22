@@ -28,3 +28,11 @@ div.column.is-4 {
 a.modveh, a.modped {
   float: right;
 }
+
+.priority ol li {
+  margin-bottom: 0.25rem
+}
+
+.priority ol li:last-child {
+  margin-bottom:1rem
+}

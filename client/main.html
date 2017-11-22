@@ -181,63 +181,73 @@
 </template>
 
 <template name="pedresult">
-  <div style="font-size:2rem">
+  <div>
     <div class="notification">
       <p class="title">Suspect Info: {{name.last}}, {{name.first}}</p>
       <hr />
       <a class="modped">Modify Entry</a>
-      <p>First Name: {{name.first}}</p>
-      <p>Last Name: {{name.last}}</p>
-      <p>Suspect Date of Birth: {{dob}}</p>
+      <div style="margin-bottom:1rem">
+        <p>First Name: {{name.first}}</p>
+        <p>Last Name: {{name.last}}</p>
+        <p>Suspect Date of Birth: {{dob}}</p>
+        {{#if isWanted}}
+          <p style="color:red;font-size:1.5rem">Wanted: Suspect wanted out of San Andreas</p>
+        {{else}}
+          <p>Wanted: Suspect is not wanted</p>
+        {{/if}}
+      </div>
+      <div style="margin-bottom:1rem">
+        <p class="is-hidden-desktop" style="font-size:1.5rem">Licensing:</p>
+        <p class="is-hidden-touch" style="font-size:1.5rem">Suspect License Status:</p>
+        {{#if license.mv.owned}}
+          <p>Motorvehicle License: Owned</p>
+          <p>Status: {{#if license.mv.revoked}}Invalid (License revoked){{else}}Valid{{/if}}</p>
+        {{else}}
+          <p>Motorvehicle License: Not Owned</p>
+        {{/if}}
+        {{#if license.ac.owned}}
+          <p>Aircraft License: Owned</p>
+          <p>Status: {{#if license.ac.revoked}}Invalid (License revoked){{else}}Valid{{/if}}</p>
+        {{else}}
+          <p>Aircraft License: Not Owned</p>
+        {{/if}}
+      </div>
+      <div class="priority">
+        <p class="is-hidden-desktop" style="font-size:1.5rem">Priors:</p>
+        <p class="is-hidden-touch" style="font-size:1.5rem">Recorded Priors:</p>
+        <ol>
+        {{#if anyprior}}
+          <li>No priors found. Suspect record clear</li>
+        {{/if}}
+        {{#if priors.speeding}}
+          <li>Found priors for speeding</li>
+        {{/if}}
+        {{#if priors.assault}}
+          <li>Found priors for assault</li>
+        {{/if}}
+        {{#if priors.drug}}
+          <li>Found priors for illegal substance posession/transacting</li>
+        {{/if}}
+        {{#if priors.dui}}
+          <li>Found priors for driving under the influence</li>
+        {{/if}}
+        {{#if priors.theft}}
+          <li>Found priors for theft</li>
+        {{/if}}
+        {{#if priors.arson}}
+          <li>Found priors for arson</li>
+        {{/if}}
+        {{#if priors.fraud}}
+          <li>Found priors for fradulent activities</li>
+        {{/if}}
+        {{#if priors.extra.use}}
+          <li>"{{priors.extra.value}}" found</li>
+        {{/if}}
+        </ol>
+        <p>Additional notes: "{{notes}}"</p>
+      </div>
       {{#if isWanted}}
-        <p style="color:red;font-size:1.5rem;margin-top:1rem;margin-bottom:1rem">Wanted: Suspect is wanted in San Andreas</p>
-      {{else}}
-        <p>Wanted: Suspect is not wanted</p>
-      {{/if}}
-      <p style="font-size:1.5rem;padding-top:1rem">Suspect License Status:</p>
-      {{#if license.mv.owned}}
-        <p>Motorvehicle License: Owned</p>
-        <p>Status: {{#if license.mv.revoked}}Invalid (License revoked){{else}}Valid{{/if}}</p>
-      {{else}}
-        <p>Motorvehicle License: Not Owned</p>
-      {{/if}}
-      {{#if license.ac.owned}}
-        <p>Aircraft License: Owned</p>
-        <p>Status: {{#if license.ac.revoked}}Invalid (License revoked){{else}}Valid{{/if}}</p>
-      {{else}}
-        <p>Aircraft License: Not Owned</p>
-      {{/if}}
-      <p style="font-size:1.5rem;padding-top:1rem">Known Suspect Priors:</p>
-      {{#if anyprior}}
-        <p>No priors found. Suspect record clear</p>
-      {{/if}}
-      {{#if priors.speeding}}
-        <p>Found priors for speeding</p>
-      {{/if}}
-      {{#if priors.assault}}
-        <p>Found priors for assault</p>
-      {{/if}}
-      {{#if priors.drug}}
-        <p>Found priors for illegal substance posession/transacting</p>
-      {{/if}}
-      {{#if priors.dui}}
-        <p>Found priors for driving under the influence</p>
-      {{/if}}
-      {{#if priors.theft}}
-        <p>Found priors for theft</p>
-      {{/if}}
-      {{#if priors.arson}}
-        <p>Found priors for arson</p>
-      {{/if}}
-      {{#if priors.fraud}}
-        <p>Found priors for fradulent activities</p>
-      {{/if}}
-      {{#if priors.extra.use}}
-        <p>"{{priors.extra.value}}" found</p>
-      {{/if}}
-      <p>Additional notes: "{{notes}}"</p>
-      {{#if isWanted}}
-        <p style="color:red;font-size:1.5rem;margin-top:1rem;margin-bottom:1rem">Proceed with extreme caution</p>
+        <p style="color:red;font-size:1.5rem">Proceed with extreme caution</p>
       {{/if}}
     </div>
   </div>
